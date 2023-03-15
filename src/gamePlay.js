@@ -3,6 +3,7 @@ export default class GamePlay {
     this.container = null;
     this.boardEl = null;
     this.cells = [];
+    this.generateRandomPosition = () => {};
   }
 
   bindToDOM(container) {
@@ -51,7 +52,7 @@ export default class GamePlay {
       let missCount = Number(this.missCountContentEl.textContent);
       missCount++;
       this.missCountContentEl.textContent = missCount;
-      if (missCount >= 10) {
+      if (missCount >= 5) {
         alert("Проигрыш");
         this.newGame();
       }
@@ -59,10 +60,11 @@ export default class GamePlay {
       let hitsCount = Number(this.hitsCountContentEl.textContent);
       hitsCount++;
       this.hitsCountContentEl.textContent = hitsCount;
-      if (hitsCount >= 10) {
+      if (hitsCount >= 5) {
         alert("Победа");
         this.newGame();
       }
+      this.generateRandomPosition(true);
     }
   }
 
@@ -74,9 +76,6 @@ export default class GamePlay {
 
   setMoleToThePosition(position) {
     if (position) {
-      /*const cellEl = document.querySelector(
-                "[data-row='" + position.x + "'][data-column='" + position.y + "']"
-            ); */
       const cellEl = this.cells.find((cell) => {
         if (
           cell.dataset.row === String(position.x) &&

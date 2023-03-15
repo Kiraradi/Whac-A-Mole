@@ -14,11 +14,17 @@ export default class GameController {
       }
     }
     this.gamePlay.drawUi(this.board);
-
+    this.gamePlay.generateRandomPosition = this.generateRandomPosition.bind(this);
     this.intervalId = setInterval(this.generateRandomPosition.bind(this), 1000);
+
   }
 
-  generateRandomPosition() {
+  generateRandomPosition(check = false) {
+    if (this.intervalId && check) {
+      clearInterval(this.intervalId);
+      this.intervalId = setInterval(this.generateRandomPosition.bind(this), 1000);
+      console.log('new Interval')
+    }
     const x = Math.floor(Math.random() * this.boardSize);
     const y = Math.floor(Math.random() * this.boardSize);
 
